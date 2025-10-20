@@ -1,18 +1,30 @@
 import wollok.game.*
+import rodados.*
+import dependencia.*
+import pedidos.*
 
-import example.pepita
 
-program PepitaGame {
-	game.title("Pepita")
+
+program AutitosGame {
+	game.title("AutitosGame")
 	game.height(10)
 	game.width(10)
-
-	// add assets in asset folder, for example, for the background
-  // game.boardGround("fondo2.jpg")
-
-	//
-
-	game.showAttributes(pepita) //Debug
-
+	game.cellSize(50)
+	const corsa = new Corsa()
+	keyboard.w().onPressDo({corsa.moverseHacia(norte)})
+	keyboard.s().onPressDo({corsa.moverseHacia(sur)})
+	keyboard.a().onPressDo({corsa.moverseHacia(oeste)})
+	keyboard.d().onPressDo({corsa.moverseHacia(este)})
+	keyboard.r().onPressDo({corsa.colocarColor(rojo)})
+	keyboard.b().onPressDo({corsa.colocarColor(azul)})
+	keyboard.g().onPressDo({corsa.colocarColor(verde)})
+	game.onCollideDo(corsa, {cosa=> cosa.choque()
+	if(cosa.resistencia()==0){
+		game.removeVisual(cosa)
+	}
+	corsa.nuevaPosicion(corsa.posicionAnterior())
+	})
+	game.addVisual(corsa)
+	game.addVisual(pared)
 	game.start()
 }

@@ -1,9 +1,109 @@
-import example.pepita
+import rodados.*
+import dependencia.*
+import pedidos.*
 
-describe "group of tests for pepita" {
-
-  test "pepita has initial energy" {
-    assert.equals(100, pepita.energy())
+describe "Test con dos dependencias" {
+  const deportes = new Dependencia()
+  const cultura = new Dependencia()
+  const cachito = new Corsa()
+  const corsa1 = new Corsa()
+  const corsa2 = new Corsa()
+  const kwid = new Kwid()
+  const kwid2 = new Kwid()
+  const kwid3 = new Kwid()
+  const kwid4 = new Kwid()
+  const especial = new Especial()
+  const pedido1 = new Pedidos()
+  method initialize() {
+    trafic.cambiarInterior(popular)
+    trafic.cambiarMotor(bataton)
+    cachito.colocarColor(rojo)
+    corsa1.colocarColor(azul)
+    corsa2.colocarColor(verde)
+    kwid.colocarTanque()
+    kwid2.colocarTanque()
+    kwid3.colocarTanque()
+    kwid4.sacarTanque()
+    especial.cambiarCapacidad(5)
+    especial.cambiarColor(beige)
+    especial.cambiarPeso(1200)
+    especial.cambiarVelocidad(160)
+    deportes.cambiarCantidadEmpleados(45)
+    cultura.cambiarCantidadEmpleados(31)
+    deportes.agregarAFlota(cachito)
+    deportes.agregarAFlota(corsa1)
+    deportes.agregarAFlota(corsa2)
+    deportes.agregarAFlota(kwid)
+    deportes.agregarAFlota(especial)
+    cultura.agregarAFlota(cachito)
+    cultura.agregarAFlota(kwid2)
+    cultura.agregarAFlota(kwid3)
+    cultura.agregarAFlota(kwid4)
+    cultura.agregarAFlota(trafic) 
   }
-
+  
+  test "En la dependecia de deporte el peso total de la flota es 6450" {
+    assert.equals(6450, deportes.pesoTotalFlota())
+  }
+  
+  test "En la dependecia de deporte está bien equipada" {
+    assert.that(deportes.estaBienEquipada())
+  }
+  
+  test "En la dependecia de deporte la capacidad total en color azul es 7" {
+    assert.equals(7, deportes.capacidadTotalEnColor(azul))
+  }
+  
+  test "En la dependecia de deporte el color del rodado más rápido es beige" {
+    assert.equals(beige, deportes.colorDelRodadoMasRapido())
+  }
+  
+  test "En la dependecia de deporte es grande " {
+    assert.that(deportes.esGrande())
+  }
+  
+  
+  test "En la dependecia de deporte capacidad faltante" {
+    assert.equals(25, deportes.capacidadFaltante())
+  }
+  
+  test "En la dependencia de cultura el peso total de la flota" {
+    assert.equals(10700, cultura.pesoTotalFlota())
+  }
+  
+  test "En la dependencia de cultura no está bien equipada" {
+    assert.notThat(cultura.estaBienEquipada())
+  }
+  
+  test "En la dependencia de cultura a capacidad total en color azul" {
+    assert.equals(10, cultura.capacidadTotalEnColor(azul))
+  }
+  
+  test "En la dependencia de cultura el color del rodado más rápido" {
+    assert.equals(rojo, cultura.colorDelRodadoMasRapido())
+  }
+  
+  test "En la dependencia de cultura no es grande " {
+    assert.notThat(cultura.esGrande())
+  }
+  
+  test "En la dependencia de cultura capacidad faltante" {
+    assert.equals(5, cultura.capacidadFaltante())
+  }
+  test "cachito puede satisfacer al pedido1" {
+    pedido1.agregarColores(azul)
+    pedido1.agregarColores(negro)
+    pedido1.cambiarCantPasajeros(4)
+    pedido1.cambiarDistancia(960)
+    pedido1.cambiarTiempoMaximo(8)
+    assert.that(pedido1.puedeSantisfacerSuPedido(cachito))
+  }
+  test "cachito no puede satisfacer al pedido1" {
+    pedido1.agregarColores(azul)
+    pedido1.agregarColores(negro)
+    pedido1.cambiarCantPasajeros(6)
+    pedido1.cambiarDistancia(960)
+    pedido1.cambiarTiempoMaximo(6)
+    assert.notThat(pedido1.puedeSantisfacerSuPedido(cachito))
+  }
 }
